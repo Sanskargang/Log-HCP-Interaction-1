@@ -176,9 +176,24 @@ Fail-Safe Resiliency Engine:
                7. Merge State Agent
                           │
                           ▼
-          8. Summary & Save Agent
+               8. Summary & Save Agent
                           │
                           ▼
+
+  
+#############################    PICTURE #################################################
+  <img width="1916" height="873" alt="image" src="https://github.com/user-attachments/assets/6307eea0-9aa6-4e28-bb51-9aef2fd8765d" />
+
+  <img width="1920" height="875" alt="image" src="https://github.com/user-attachments/assets/466f3200-6519-44a2-9f05-3cb787e7bd76" />
+
+  <img width="1918" height="860" alt="image" src="https://github.com/user-attachments/assets/12ec6269-a82d-442f-834b-fa9cdaeda6c5" />
+
+  <img width="1918" height="868" alt="image" src="https://github.com/user-attachments/assets/0dccb03f-8694-4dd3-a813-f46385d14a2c" />
+
+
+
+
+         
                  PostgreSQL Database
 
 
