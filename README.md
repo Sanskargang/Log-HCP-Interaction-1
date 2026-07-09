@@ -179,7 +179,7 @@ Fail-Safe Resiliency Engine:
                8. Summary & Save Agent
                           │
                           ▼
-
+                  PostgreSQL Database
   
 #############################    PICTURE #################################################
   <img width="1916" height="873" alt="image" src="https://github.com/user-attachments/assets/6307eea0-9aa6-4e28-bb51-9aef2fd8765d" />
@@ -194,6 +194,6 @@ Fail-Safe Resiliency Engine:
 
 
          
-                 PostgreSQL Database
+                 
 
 
