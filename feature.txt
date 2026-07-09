@@ -1,0 +1,107 @@
+CRM Feature Visualization Audit: Line Graph Usage
+==================================================
+
+This document audits the usage of line graph (and other charting/visualization) tools within the CRM application.
+
+Summary of Line Graph Usage
+---------------------------
+- Total Features Using a Line Graph: 0
+
+Although Recharts is imported inside the Analytics component (including AreaChart), there are currently no features utilizing a traditional "Line Graph" or "Area Graph" tool. Instead, we utilize specialized bar, vertical, pie, and network visualization tools to represent our clinical metrics and agent pipeline.
+
+Detailed Breakdown of Active Visualizations and Charts
+-------------------------------------------------------
+
+1. Product Discussions (Bar Chart)
+   - Component: `AnalyticsDashboard.tsx`
+   - Tool/Type: Recharts `<BarChart>`
+   - Description: Renders a horizontal bar chart displaying the frequency of discussion for top clinical products (e.g. Glucophage, Januvia, Crestor).
+
+2. Meeting Channels (Vertical Bar Chart)
+   - Component: `AnalyticsDashboard.tsx`
+   - Tool/Type: Recharts `<BarChart layout="vertical">`
+   - Description: Renders a vertical layout bar chart displaying the breakdown of interactions across different meeting types (Face to Face, Phone, Video).
+
+3. Doctor Sentiment (Donut / Pie Chart)
+   - Component: `AnalyticsDashboard.tsx`
+   - Tool/Type: Recharts `<PieChart>` with `<Pie innerRadius={60} outerRadius={80}>`
+   - Description: Displays a high-contrast clinical sentiment distribution (Positive, Neutral, Negative) categorized from transcribed physician feedback.
+
+4. LangGraph Agent Workflow (Network Graph Visualizer)
+   - Component: `LangGraphVisualizer.tsx`
+   - Tool/Type: Interactive SVG/CSS SVG Flow Pipeline Graph
+   - Description: Visualizes the chronological agentic validation chain (Intent Detector -> Med-Extract Agent -> Compliance Validator -> Medical Intelligence -> SQL Formatter Node) with active heartbeat indicators and clinical alert overlays.
+
+
+LangGraph Multi-Agent HCP Extraction Workflow Tool
+===================================================
+
+The CRM application integrates a custom-designed, state-of-the-art Multi-Agent LangGraph workflow pipeline. This tool automates advanced clinical text extraction, conversational corrections, automated registry grounding, multi-field state merges, validation checks, and automatic draft caching.
+
+Multi-Agent Pipeline Nodes & Architecture:
+------------------------------------------
+1. **Intent Detection Node (runIntentDetectionNode)**:
+   - Analyzes incoming representative queries and transcripts.
+   - Categorizes intent into structured classes: `meeting_logging`, `doctor_query`, `follow_up`, or `other`.
+   - Incorporates robust offline heuristic fallbacks for high load scenarios.
+
+2. **Conversation Memory Node (runConversationMemoryNode)**:
+   - Seamlessly merges multi-turn chat history with the current draft state.
+   - Detects user correction vs. addition states to preserve long-term session context.
+
+3. **HCP Entity Extraction Agent Node (runHCPEntityExtractionAgentNode)**:
+   - Centrally extracts all 13 CRM fields (Doctor Name, Hospital, Specialization, Meeting Date, Meeting Time, Meeting Type, Products Discussed, Samples Given, Competitor Mentioned, Doctor Feedback, Representative Notes, Follow-up Date, Priority) exactly as written.
+   - Prevents hallucinations and guarantees zero default/placeholder value injection.
+
+4. **Date & Time Parser Node (runDateTimeExtractorNode)**:
+   - Standardizes and parses relative meeting dates (e.g. "today", "yesterday", "next Friday") and diverse time strings into clean ISO dates and structured AM/PM times.
+
+5. **Validation Agent Node (runValidationAgentNode)**:
+   - Examines complete form parameters and calculates field-by-field confidence scores.
+   - Triggers clarification prompts if confidence falls below 80% to maintain database integrity.
+
+6. **Merge Existing Form Node (runMergeExistingFormNode)**:
+   - Performs high-fidelity state merging into the active draft CRM state, implementing strict field preservation and unique product array merge rules.
+
+7. **Update Changed Fields Node (runUpdateChangedFieldsNode)**:
+   - Computes precise field-level deltas to track and highlight newly changed information without resetting the form.
+
+8. **Save Draft Node (runSaveDraftNode)**:
+   - Automatically builds professional medical summaries and action items, then persists the finalized interaction to the server-side registry.
+
+Fail-Safe Resiliency Engine:
+---------------------------
+- **High-Fidelity Heuristic Fallbacks**: All pipeline nodes implement custom programmatic heuristic engines to mitigate upstream API quota limits (`RESOURCE_EXHAUSTED`).
+- **Rule-Based Extractors**: Guarantees zero-downtime parsing of doctor titles, specialties, hospital keywords, and numerical sample counts.
+- **State Merging Consistency**: Performs secure, deep, state-preserving merges client-side and server-side.
+
+
+                    User Message
+                          │
+                          ▼
+                 1. Intent Agent
+                          │
+                          ▼
+              2. Conversation Memory
+                          │
+                          ▼
+             3. HCP Entity Extractor
+                          │
+                          ▼
+             4. Medical NER Agent
+                          │
+                          ▼
+             5. Date & Time Parser
+                          │
+                          ▼
+              6. Validation Agent
+                          │
+                          ▼
+               7. Merge State Agent
+                          │
+                          ▼
+          8. Summary & Save Agent
+                          │
+                          ▼
+                 PostgreSQL Database
+

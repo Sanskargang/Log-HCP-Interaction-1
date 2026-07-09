@@ -1,0 +1,6 @@
+{
+  "name": "Log HCP Interaction",
+  "description": "An AI-First CRM application for Healthcare Professional (HCP) interaction logging featuring a structured form and an AI conversational chat assistant, synchronized in real time with server-side Gemini processing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
